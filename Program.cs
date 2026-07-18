@@ -48,14 +48,14 @@ class Program
 
                 int opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
-                {                 
+                {
                     // RETIRAR DINERO
 
-                    case 1: 
+                    case 1:
                         Console.WriteLine("Ingrese el monto a retirar:");
                         decimal montoARetirar = decimal.Parse(Console.ReadLine());
 
-                       if (montoARetirar <=0)
+                        if (montoARetirar <= 0)
                         {
                             Console.WriteLine("El monto a retirar debe ser mayor a cero.");
                         }
@@ -67,11 +67,11 @@ class Program
                         {
                             Console.WriteLine("El monto a retirar excede el límite diario de retiro.");
                         }
-                       else if (montoARetirar > 500.00m)
+                        else if (montoARetirar > 500.00m)
                         {
                             Console.WriteLine("No puede retirar mas de $500.00 en una sola operación");
                         }
-                       else if (montoARetirar %10 != 0)
+                        else if (montoARetirar % 10 != 0)
                         {
                             Console.WriteLine("Solo se permiten multiplos de 10");
                         }
@@ -97,7 +97,7 @@ class Program
                         Console.WriteLine("Ingrese el monto a depositar:");
                         decimal montoADepositar = decimal.Parse(Console.ReadLine());
                         saldo += montoADepositar;
-                        
+
                         if (montoADepositar <= 0)
                         {
                             Console.WriteLine("El monto a depositar debe ser mayor a cero.");
@@ -105,7 +105,7 @@ class Program
                         else if (montoADepositar > 5000.00m)
                         {
                             Console.WriteLine("No puede depositar un monto mayor a $5,000.00");
-                        }                     
+                        }
 
                         else if (montoADepositar > 2500.00m)
                         {
@@ -119,7 +119,7 @@ class Program
                         }
                         break;
 
-
+                    // TRANSFERIR DINERO
                     case 4:
                         Console.WriteLine("Ingrese el número de cuenta del destinatario:");
                         int cuentaDestinatario = int.Parse(Console.ReadLine());
@@ -127,10 +127,46 @@ class Program
                         Console.WriteLine("Ingrese el monto a transferir:");
                         decimal montoATransferir = decimal.Parse(Console.ReadLine());
 
+                        //calculo para la comision.
+
+                        decimal comision = 0;
+                        if (montoATransferir <= 500) comision = 2.00m;
+                        else if (montoATransferir <= 1000) comision = 5.00m;
+                        else comision = 8.00m;
+
+                        if (cuentaDestinatario == cuentaCorrecta)
+                        {
+                            Console.WriteLine("La cuenta destino no puede ser la misma que su propia cuenta");
+                        }
+
+                        else if (cuentaDestinatario.ToString().Length != 9)
+                        {
+                            Console.WriteLine("La cuenta destino debe tener 9 dígitos");
+                        }
+
+                        else if (montoATransferir <= 0)
+                        {
+                            Console.WriteLine("El monto a transferir debe ser mayor a cero.");
+                        }
+                        else if (montoATransferir > saldo)
+                        {
+                            Console.WriteLine("Saldo insuficiente para realizar la transferencia.");
+                        }
+                        else
+                        {
+                            saldo -= (montoATransferir + comision);
+                            Console.WriteLine("Transferencia exitosa. Se ha transferido $" + montoATransferir + " a la cuenta " + cuentaDestinatario);
+                            Console.WriteLine("Comisión aplicada: $" + comision);
+                            Console.WriteLine("Su nuevo saldo es: $" + saldo);
+                            Console.WriteLine("Monto transferido: $" + montoATransferir);
+                        }
+
+                        break;
+
 
                 }
                 break;
-                default:
+            default:
                 Console.WriteLine("Cuenta no reconocida.");
                 break;
         }

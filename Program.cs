@@ -148,7 +148,7 @@ class Program
                         {
                             Console.WriteLine("El monto a transferir debe ser mayor a cero.");
                         }
-                        else if (montoATransferir > saldo)
+                        else if ((montoATransferir + comision) > saldo)
                         {
                             Console.WriteLine("Saldo insuficiente para realizar la transferencia.");
                         }

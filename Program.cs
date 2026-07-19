@@ -15,51 +15,53 @@ class Program
         decimal limiteDiarioDeRetiro = 1200.00m;
         decimal montoMaximoDiario = 350.00m;
        
-        // solcitar datos
+        // solcitud y validacion de datos
         Console.WriteLine("Por favor, ingrese su numero de cuenta:");
         int numeroDeCuentaIngresado = int.Parse(Console.ReadLine());
+        if (numeroDeCuentaIngresado != cuentaCorrecta)
+        {
+            Console.WriteLine("Numero de cuenta incorrecto");
+            return;
+        }
 
         Console.WriteLine("Ingrese su PIN:");
         int pinIngresado = int.Parse(Console.ReadLine());
 
-        // validar datos 
-        if (numeroDeCuentaIngresado == cuentaCorrecta && pinIngresado == pinCorrecto)
+        if (pinIngresado != pinCorrecto)
         {
-            // Si es correcto, le damos la bienvenida usando su nombre guardado
-            Console.WriteLine("Bienvenido " + nombrePredeterminado);
-
-            Console.WriteLine("Tu saldo actual es de: $" + saldo);
-        }
-        else
-        {
-            Console.WriteLine("Numero de cuenta o PIN incorrecto");
+            Console.WriteLine("PIN incorrecto");
+            return;
         }
 
-        // menu principal
+        // MENU PRINCIPAL :)
 
-        bool accesoConcedido = (numeroDeCuentaIngresado == cuentaCorrecta && pinIngresado == pinCorrecto);
-
-        if (accesoConcedido)
-    {
-            switch (numeroDeCuentaIngresado)
-        {
-            case 100200300:
                 Console.WriteLine("Seleccione una opción:");
 
-                Console.WriteLine("1. Retirar dinero");
-                Console.WriteLine("2. Consultar saldo");
+                Console.WriteLine("1. Consultar saldo");
+                Console.WriteLine("2. Retirar dinero");
                 Console.WriteLine("3. Depositar dinero");
                 Console.WriteLine("4. Transferir dinero");
                 Console.WriteLine("5. Cambiar PIN");
                 Console.WriteLine("6. Simular préstamo");
+                Console.WriteLine("7. Ver resumen de cuenta");
+                Console.WriteLine("8. Salir");
 
 
                     int opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
                 {
+
+                // CONSULTAR SALDO
+
+                case 1:
+                    Console.WriteLine("Su saldo actual es: $" + saldo);
+                    Console.WriteLine("Su límite diario de retiro es: $" + limiteDiarioDeRetiro);
+                    Console.WriteLine("Su monto restante para retirar es: $" + (limiteDiarioDeRetiro - saldo));
+                    break;
+
                     // RETIRAR DINERO
 
-                    case 1:
+                    case 2:
                         Console.WriteLine("Ingrese el monto a retirar:");
                         decimal montoARetirar = decimal.Parse(Console.ReadLine());
 
@@ -92,20 +94,12 @@ class Program
                         }
                         break;
 
-                    // CONSULTAR SALDO
-
-                    case 2:
-                        Console.WriteLine("Su saldo actual es: $" + saldo);
-                        Console.WriteLine("Su límite diario de retiro es: $" + limiteDiarioDeRetiro);
-                        Console.WriteLine("Su monto restante para retirar es: $" + (limiteDiarioDeRetiro - saldo));
-                        break;
-
                     // DEPOSITAR DINERO
 
                     case 3:
                         Console.WriteLine("Ingrese el monto a depositar:");
                         decimal montoADepositar = decimal.Parse(Console.ReadLine());
-                        saldo += montoADepositar;
+                        
 
                         if (montoADepositar <= 0)
                         {
@@ -116,16 +110,16 @@ class Program
                             Console.WriteLine("No puede depositar un monto mayor a $5,000.00");
                         }
 
-                        else if (montoADepositar > 2500.00m)
-                        {
-                            Console.WriteLine("Depósito sujeto a revisión bancaria.");
-                        }
-
                         else
                         {
                             saldo += montoADepositar;
-                            Console.WriteLine("Depósito exitoso. Su nuevo saldo es: $" + saldo);
-                        }
+                            if (montoADepositar > 2500.00m)
+                            {
+                                Console.WriteLine("Depósito sujeto a revisión bancaria.");
+                            }
+                                Console.WriteLine("Saldo actualizado: $" + saldo.ToString("F2"));
+
+                         }
                         break;
 
                     // TRANSFERIR DINERO
@@ -164,10 +158,10 @@ class Program
                         else
                         {
                             saldo -= (montoATransferir + comision);
+                            Console.WriteLine("Cuenta destino: " + cuentaDestinatario);
                             Console.WriteLine("Transferencia exitosa. Se ha transferido $" + montoATransferir + " a la cuenta " + cuentaDestinatario);
                             Console.WriteLine("Comisión aplicada: $" + comision);
                             Console.WriteLine("Su nuevo saldo es: $" + saldo);
-                            Console.WriteLine("Monto transferido: $" + montoATransferir);
                         }
 
                         break;
@@ -283,15 +277,69 @@ class Program
 
                             break;
 
-                    }
-                    break;
-            default:
-                Console.WriteLine("Cuenta no reconocida.");
-                break;
-            }
-        }
-    }
+                        // VER RESUMEN DE CUENTA.
+                        case 7:
+                            Console.WriteLine("Resumen de cuenta:");
 
-}
+                            if (saldo > 2000.00m)
+                            {
+                                Console.WriteLine("Usted es un Cliente de nivel Oro");
+                            }
+                            else if (saldo >= 1000.00m && saldo <= 2000.00m)
+                            {
+                                Console.WriteLine("Usted es un cliente de nivel Plata");
+                            }
+                            else if (saldo < 1000.00m)
+                            {
+                                Console.WriteLine("Usted es un cliente de nivel Bronce");
+                            }
+
+                            //apartado para nivel de finanza
+
+                            if (saldo > 5000.00m)
+                            {
+                                Console.WriteLine("Cliente con Excelente capacidad financiera");
+                            }
+                            else if (saldo >= 2000.00m && saldo <= 5000.00m)
+                            {
+                                Console.WriteLine("Cliente con nivel saludable de finanzas");
+                            }
+                            else if (saldo >=1000.00m && saldo < 2000.00m)
+                            {
+                                Console.WriteLine("El cliente debe controlar sus gastos");
+                            }
+                            else if (saldo < 1000.00m)
+                            {
+                                Console.WriteLine("Cliente con nivel de finanzas muy bajo");
+                            }
+
+                            // panel para mostrar.
+
+                            Console.WriteLine("El nombre del cliente es : " + nombrePredeterminado);
+                            Console.WriteLine("El numero de cuenta es : " + cuentaCorrecta);
+                            Console.WriteLine("El saldo actual es : " + saldo);
+                            Console.WriteLine("El monto retirado es : " + limiteDiarioDeRetiro);
+                            Console.WriteLine("El limite restante es : " + (limiteDiarioDeRetiro - saldo));
+                            Console.WriteLine("El estado de la cuenta es : " + (saldo > 0 ? "Activa" : "Inactiva"));
+
+                            break;
+
+                        // Opcion salir
+                            case 8:
+                            Console.WriteLine("Muchas gracias por utilizar BancoTech, el mejor banco del mundo, lo esperamos nuevamente");
+                            break;
+
+                             default:
+                                 Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida.");
+                                break;
+        }                       
+
+
+
+    }
+        }
+    
+
+
 
 

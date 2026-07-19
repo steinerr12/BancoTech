@@ -54,9 +54,9 @@ class Program
                 // CONSULTAR SALDO
 
                 case 1:
-                    Console.WriteLine("Su saldo actual es: $" + saldo);
-                    Console.WriteLine("Su límite diario de retiro es: $" + limiteDiarioDeRetiro);
-                    Console.WriteLine("Su monto restante para retirar es: $" + (limiteDiarioDeRetiro - saldo));
+                    Console.WriteLine("Su saldo actual es: $" + saldo.ToString("F2"));
+                    Console.WriteLine("Su límite diario de retiro es: $" + limiteDiarioDeRetiro.ToString("F2"));
+                    Console.WriteLine("Su monto restante para retirar es: $" + (limiteDiarioDeRetiro - saldo).ToString("F2"));
                     break;
 
                     // RETIRAR DINERO
@@ -73,7 +73,7 @@ class Program
                         {
                             Console.WriteLine("Saldo insuficiente para realizar el retiro.");
                         }
-                        else if (montoARetirar > limiteDiarioDeRetiro)
+                        else if ((montoARetirar + montoMaximoDiario) > limiteDiarioDeRetiro)
                         {
                             Console.WriteLine("El monto a retirar excede el límite diario de retiro.");
                         }
@@ -89,8 +89,8 @@ class Program
                         {
                             saldo -= montoARetirar;
 
-                            Console.WriteLine("Retiro exitoso. Su nuevo saldo es: $" + saldo);
-                            Console.WriteLine("Su nuevo saldo es: $" + saldo);
+                            Console.WriteLine("Retiro exitoso");
+                            Console.WriteLine("Su nuevo saldo es: $" + saldo.ToString("F2"));
                         }
                         break;
 
@@ -159,9 +159,9 @@ class Program
                         {
                             saldo -= (montoATransferir + comision);
                             Console.WriteLine("Cuenta destino: " + cuentaDestinatario);
-                            Console.WriteLine("Transferencia exitosa. Se ha transferido $" + montoATransferir + " a la cuenta " + cuentaDestinatario);
-                            Console.WriteLine("Comisión aplicada: $" + comision);
-                            Console.WriteLine("Su nuevo saldo es: $" + saldo);
+                            Console.WriteLine("Transferencia exitosa. Se ha transferido $" + montoATransferir.ToString("F2") + " a la cuenta " + cuentaDestinatario);
+                            Console.WriteLine("Comisión aplicada: $" + comision.ToString("F2"));
+                            Console.WriteLine("Su nuevo saldo es: $" + saldo.ToString("F2"));
                         }
 
                         break;
@@ -317,9 +317,9 @@ class Program
 
                             Console.WriteLine("El nombre del cliente es : " + nombrePredeterminado);
                             Console.WriteLine("El numero de cuenta es : " + cuentaCorrecta);
-                            Console.WriteLine("El saldo actual es : " + saldo);
-                            Console.WriteLine("El monto retirado es : " + limiteDiarioDeRetiro);
-                            Console.WriteLine("El limite restante es : " + (limiteDiarioDeRetiro - saldo));
+                            Console.WriteLine("El saldo actual es : " + saldo.ToString("F2"));
+                            Console.WriteLine("El monto retirado es : " + limiteDiarioDeRetiro.ToString("F2"));
+                            Console.WriteLine("El limite restante es : " + (limiteDiarioDeRetiro - saldo).ToString("F2"));
                             Console.WriteLine("El estado de la cuenta es : " + (saldo > 0 ? "Activa" : "Inactiva"));
 
                             break;

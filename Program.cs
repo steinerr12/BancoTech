@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 class Program
 {
@@ -36,7 +37,11 @@ class Program
 
         // menu principal
 
-        switch (numeroDeCuentaIngresado)
+        bool accesoConcedido = (numeroDeCuentaIngresado == cuentaCorrecta && pinIngresado == pinCorrecto);
+
+        if (accesoConcedido)
+    {
+            switch (numeroDeCuentaIngresado)
         {
             case 100200300:
                 Console.WriteLine("Seleccione una opción:");
@@ -45,8 +50,11 @@ class Program
                 Console.WriteLine("2. Consultar saldo");
                 Console.WriteLine("3. Depositar dinero");
                 Console.WriteLine("4. Transferir dinero");
+                Console.WriteLine("5. Cambiar PIN");
+                Console.WriteLine("6. Simular préstamo");
 
-                int opcion = int.Parse(Console.ReadLine());
+
+                    int opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
                 {
                     // RETIRAR DINERO
@@ -78,6 +86,7 @@ class Program
                         else
                         {
                             saldo -= montoARetirar;
+
                             Console.WriteLine("Retiro exitoso. Su nuevo saldo es: $" + saldo);
                             Console.WriteLine("Su nuevo saldo es: $" + saldo);
                         }
@@ -163,13 +172,57 @@ class Program
 
                         break;
 
+                    //Opcion cambiar Pin
+                    case 5:
+                        Console.WriteLine("Ingrese su PIN actual:");
+                        int pinActualIngresado = int.Parse(Console.ReadLine());
 
-                }
-                break;
+                        Console.WriteLine("Ingrese el nuevo PIN:");
+                        int nuevoPin = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Confirme el nuevo PIN:");
+                        int confirmacionPin = int.Parse(Console.ReadLine());
+
+                        if (pinActualIngresado != pinCorrecto)
+                        {
+                            Console.WriteLine("El PIN actual es incorrecto.");
+                        }
+                        else if (nuevoPin == pinCorrecto)
+                        {
+                            Console.WriteLine("El nuevo PIN debe ser diferente al anterior.");
+                        }
+                        else if (nuevoPin.ToString().Length != 4)
+                        {
+                            Console.WriteLine("El PIN debe tener exactamente 4 dígitos.");
+                        }
+                        else if (nuevoPin < 1000)
+                        {
+                            Console.WriteLine("El PIN no puede iniciar con cero.");
+                        }
+                        else if (nuevoPin != confirmacionPin)
+                        {
+                            Console.WriteLine("La confirmación no coincide con el nuevo PIN.");
+                        }
+                        else
+                        {
+                            pinCorrecto = nuevoPin;
+                            Console.WriteLine("PIN actualizado correctamente.");
+                        }
+                        break;
+                            
+                      
+
+
+
+                    }
+                    break;
             default:
                 Console.WriteLine("Cuenta no reconocida.");
                 break;
+            }
         }
     }
 
 }
+
+

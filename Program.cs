@@ -209,10 +209,79 @@ class Program
                             Console.WriteLine("PIN actualizado correctamente.");
                         }
                         break;
-                            
-                      
+
+                        //Opcion simular prestamo
+                        case 6:
+
+                            Console.WriteLine("Ingrese el monto solicitado:");
+
+                            decimal montoPrestamo = decimal.Parse(Console.ReadLine());
 
 
+
+                            Console.WriteLine("Ingrese el plazo en meses (12, 24 o 36):");
+
+                            int plazoMeses = int.Parse(Console.ReadLine());
+
+
+
+                            decimal tasaInteres = 0;
+
+                            if (plazoMeses == 12) tasaInteres = 0.08m;
+
+                            else if (plazoMeses == 24) tasaInteres = 0.12m;
+
+                            else if (plazoMeses == 36) tasaInteres = 0.18m;
+
+
+
+                            if (montoPrestamo <= 0)
+
+                            {
+
+                                Console.WriteLine("El monto solicitado debe ser mayor a cero.");
+
+                            }
+
+                            else if (plazoMeses != 12 && plazoMeses != 24 && plazoMeses != 36)
+
+                            {
+
+                                Console.WriteLine("Plazo inválido. Debe ser 12, 24 o 36 meses.");
+
+                            }
+
+                            else
+
+                            {
+
+                                decimal interes = montoPrestamo * tasaInteres;
+
+                                decimal totalAPagar = montoPrestamo + interes;
+
+                                decimal cuotaMensual = totalAPagar / plazoMeses;
+
+
+
+                                Console.WriteLine("Interés: $" + interes.ToString("F2"));
+
+                                Console.WriteLine("Total a pagar: $" + totalAPagar.ToString("F2"));
+
+                                Console.WriteLine("Cuota mensual: $" + cuotaMensual.ToString("F2"));
+
+
+
+                                if (montoPrestamo > 15000.00m)
+
+                                {
+
+                                    Console.WriteLine("Requiere aprobación del gerente.");
+
+                                }
+
+                            }
+
+                            break;
 
                     }
                     break;
